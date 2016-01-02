@@ -1,0 +1,6 @@
+[submodule "lambdacube-compiler"]
+	path = lambdacube-compiler
+	url = https://github.com/lambdacube3d/lambdacube-compiler.git
+[submodule "lambdacube-ir"]
+	path = lambdacube-ir
+	url = https://github.com/lambdacube3d/lambdacube-ir.git
