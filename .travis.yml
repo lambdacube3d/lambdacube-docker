@@ -1,7 +1,20 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 language: c
-
+env:
+  global:
+  - secure: "EtrVG0uhdLUs8kzY545BHnUys02AWXYDkwUsn/sNBei0FYZQKszyYe4/cSusy2bb9NANo+pzo75YsMVkNgwo0ocl6+fiMFEMYfjtACwYgMTX8t5ShMzqU+JX0f6s92y+kn7yhidqtQ+DbMah/aw9yP+YKgVy8Eoy39v/r4F8XiWvXFep7WxFkv6ObFN9cjUqF7ob/O4Oc7Haj3igZhLMr4HRbGptULxB/5QD8m3+Gu357Rm6VdKLDUpxfwzsvJ+hIxsB8V9uk3fj55/hYq+XghhblIi78BaRvKLgtf/Qd6K3oYJo2p7qVBKvJ6UhT0v/QUYvfkhYU27RdbCxT0RC2hEDW3iCh4D50A6+e2TEiimrFCvGivX1lRkaKavAdt08WiLCW6vkRI4I5ugAOiIBt66iAoqmSmO+Of18Jm3VhQcUNWNMmJFLSC+jlO0ZgVQ8GQj0bK5sZmpbLet4gT2UwqrIal3ob1ihMVaBMafanZRTJVX8wvrihTYNE2pXZ/Jzu88F2IPPngVP+kCBXpdckhFe7mg4a/kP/c07m3HD/XRQW1p+XQ0JCX/jz43vCiP7pwAm45/1axDQN+G6i6FLngM55F2w5gmPiIxZUmXgSHUb0AkOmRTKQiL3iYRWW9dlmE/JuoN8ajrWhHjXH3rMB73kxT1c+MYionu1po1zy3w=" # DOCKER_EMAIL
+  - secure: "jPuWJmpAmrQATzAr+smqNvDpLfBX2sMQiE5vQNNPdcRgZel+NNxtM/VRSI/6dO54Ps8Ly90F/bmrcXEqw2fQjZyY/xJ/YtfpiIsY5f/Xhy6oEzcdahPnMhiBVN+Bg1/qO6Hsqe0G0ATV3BQXfb0X0voo5D8Ys0S2r2v/LGEpmihDKwJW140uU+bwvGkKiOlQp981M9Q5DmKvlFkVP70L7dkLk1O6lRRRLZyBM4n/d3ADH0oGXp3wXjU2mENGIrNWKvtd+C/hx600+aHJbuLL4aJY0O1RmAZKNrOMcyuN+kviqgglm2xhM7ktT4WHgYfUAEytVn5ziFqhHE8OSC1mQpghpAR/NQ+m2ZxoXKaEfid4sCNPstDSQofVijXE3alDtEKxVQY5vVOZhKDmxO7ZA3Goxu6i7nodpSfmsVGCN8E4f1/X3Gvkw4Fd0Dxaes5cAbnnlKZclbZGNe4VIIYupS2Fk4XAByHSysIRn1X4SV8vzyOT/xYGtMvLzXbdCji0bWlXx7FPmDarlKG1z3yb0Dn0lo95QT/rGYqsHEsONuNy4ZmHdZydsQZq9ZfAXsOyLRZxXhuHo8ClPRDMF4bOSkMXvdEnYtYTZvXfxPN3xAga+PeOQ/1mRFcnRoB+4G+CAEwcGsXiyx8HtFJrrJDJoTgRzpEanTPJgF8NkuGBmXg=" # DOCKER_USER
+  - secure: "7I0dDpMtpUS3xRw96rquSlSC6WYtpNX2cgPIgsjq+4rm4kE0V7JzyxwmehDZmjIkRu1Zl/HxKd3AunCWmPLkk9z2YZNEDTIe1eCC6X3y7jnCGzZVsTsrNa2TG5PHKuX+b+BB8Giawf9nuD0FYvMe/zlf0Zh84vdY9D2Ep5uW8zAgYjYHSTe87Yy7L7iUHCb9tq057Bt0l/SMTYeeMLMbdQx747NPuOmjzuPqsQATnncfdp9IVUsOH6XIByU+ko25WrNeEYovjsTwfnKnG5YbMr7esZuP0TYsITKRstkZqrIa3jIzXs216+Nod4SM5Navf5L44VGMeYe4y0veY1YaJnO1ih+MMA6gQvHGn1Ry+I8vyucddyOrNgB0K543uGZwDjnuBepO4g69eRlFt/ok4joRFrPqRRfU7Db/e1CfaEj5PdxhAm5/7fUZuI3uXEG8F/EyHnUhK3sj/a1JeX0DJmDmxT+hMVPddsHSBi7x/AYkelJiw9rYKXqHVxC4q4YsbtVkexrydfMyf5Di8HGXH3P44DSZQna86z6FlCjbS7sTGfYClk1HwZ4+nHQ1KMm7nUSQyki0Sx62cUAimfqSlrDhwIPW2L50pp+uInSsyY231sBYLEm7YTobGarM99czQ8rZtZzohb5uSpJBfgsgmQjuAOYtyr4xUXRBMgdESMY=" # DOCKER_PASS
+  - COMMIT=${TRAVIS_COMMIT::8}
+after_success:
+  - git submodule init
+  - get submodule update
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=andorp/lambdacube
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
