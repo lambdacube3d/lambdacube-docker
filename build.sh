@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t="andorp/lambdacube" .
+docker build -t="lambdacube3d/lambdacube3d" .
