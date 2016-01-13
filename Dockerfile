@@ -31,7 +31,7 @@ RUN cd /root/source/docker/lci/lambdacube-ir.haskell && \
     cabal install -j1 --only-dependencies --reorder-goals && \
     cabal install -j1 && \
     cd /root/source/docker/lcc && \
-    cabal install -j1 --only-dependencies --reorder-goals
+    cabal install --constraint="indentation -trifecta" -j1 --only-dependencies --reorder-goals
 
 # Directories for sources
 VOLUME "/root/source/lambdacube-ir"
