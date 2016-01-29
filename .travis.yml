@@ -7,7 +7,6 @@ env:
   - secure: "1TsGRfnzYLlEOzVYJzg6uFO0hZv2UrcIjBLaWfqpUmmXJWVsUqkOKR2ZJlqTb6I7Q2QEJaT8qx/fasiZsDbt8Zig4fyDHQ7sh2pefUkRSDWzXO5hKIinH1O9Mm3RsCkwmItWiMqwSpVrqqdWorEaSuoSL9lge9LkQE7CHtR1l6gJhPlxz95qqQG7TSbzVTjB9CfwfDguZcvxIPdZDigxgumkzFuw9HcF8JILv3kFBh/zQ0r6d3NEQamNEwFnuD6gRZnrogXDSvIpKn5KCoMZcDktMQiMwBbEeC5IA/KF0WSkud3mEtUOS6UnBkiFc9/QVbVHe31L0GIYfgZyTCmGk+clXsCcPIw4DAUqKb5qPQXZetNQ03SiiiyxKyntJ8T0it1gBjUW6ychHRNezedfSMxHBnrdyBlwUKrtjImp8tnrh0Q3yLUMSXyHTtjh3NQFNQep2lIlzkF8916GwO+Yk1DXWX4eJpYuDmHwWc3dSIvYjnMVtYvhKXoc5vkoYDqJpkPWxmliLweb0RrP7mUWNQVxYat608Q5eng2Fd1v9A0lwVGeI2NJ+82fuBzfIQcq1AmFyzyw2SSe9zU/nYZMK5+u/QKbbM+gl2cZ7WbO/AfjKpRLBen8xIqwvhDV1G/QWZI9UT4TTyFJQ3JdWqwrzYm273Sws0tlN0ctvkONPsI=" # DOCKER_EMAIL
   - secure: "5gBzUvQHGzhQf+ytMVKIYzoV8RI9XCi8afSXowhRrOt8nDoDgwgtGQvcFFpBoc4U2SqZHRLqADhys6Gr2v8cQWmyLnetAssquy4VCIy5G5B/3ughIOEW7V/jKqjptmilHR3nCgbTrMGjVs8RtjURPo3w/x8Ga2m2h1Lx6pu+8iAAqwqE8Mr3yAxCNUnnmlqAuh/gwO8MSocpJWMj+OjbvPa+2+9Fs3PAzsM4empIMg+OR2c8ovTHRDtS7FnHWg7tDWZ2+rcC+wocFFl234Moe0XjDzFfZDv40JMrttKTZDoRLLE2REeiKKWR5zyn6Cqf7/6syHooyCUt3QX8OZCpbuQVrxFfnWsJfQMoQRPDyZt6XluAs6auUsmpJ1UgvCRLcW51Mz+vXXNZpzaKzvDF1U313ZPD65FwnpRvqDc6rsN5b7RInryEwT9WgoqTSMk7cJtEe4pqDpfLprF48rZdL4szkmynfDlXKUUaGIyrVg9/TQSbAcxlz607MrjR6DGL7aGZe3QkIPkSA2HZ0223sDWTd3NfTzKl/X0cc+4OFg2Ea/m8zDkjuoXCBRcrGXWlb/G3QNU1v0KcNNFMvjI+NOkFRl3hj0q476OZTI0CsEnvGAljy5RzJYfivQxwVHKbdKMJYZSkZHemn3YPTvkQ+Oxoe+qF4Bo7hTZJ5KRmd7w=" # DOCKER_USERNAME
   - secure: "SmQlvM3Qg80YLMc+Alg18dpAP//FhEWX6pZ+9Thwp2vjg2fnW8bEY3QUZpNr+HROvXfbj65ASUA4h15bMdyORtoI3lalkNMp4IoXF2MbvSxkIojqrIJF7HgdISZCoM0IFl0z8CdxaCIOllxmN5cBz6pJ5LzjgcyNwivt8BQlLTkqUK7pJ1xI3aSRy3cGigII64G28AcD5ah29mQDhiCk9Gmokyt/cGlHlPJp/Cm0xZtYohVrGva/pD4XJX+ouCn7pTQAAFXQPQMg2OdmzE+VI+MJmuVN7/UXzsq733m329mJBTGSLXfgZpxX2JNkxrV4Hj4tVG95Un2nrPjy5i3/RsRFH/R0V8Aa4+x3fysmz9ijGreQ2eb20P0jmf5wyCV2BCG46uXBz4cX+eriyG6vWmCzl85BLWtEv2cHpa5s2XeUSsEZhnu0AuWoIQc845aYX+mosaiwJUo6mATOcc1eG81QK9VRR8w36cfbUEQH/1HwtXlzUzjmr8roCYcYrTAx+xQdYtLrAB+U57hajCXTZflHQiorZnwZrV7p8sIs8TE0V5sCIglyGfwBlq0oW830IldNESpctqkFIApvOFkZ9h21ekT3UcITVXIRnQWGqW0TxCh4iWiDDFtWkesnKhdYktSqugu8rD/zvdAPjFzZuE0+mnDTuHJxc47zk0t2hU8=" # DOCKER_PASS
-  - COMMIT=${TRAVIS_COMMIT::8}
 script:
   - echo "Building lambdacube docker image..."
 after_success:
@@ -16,7 +15,5 @@ after_success:
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASS
   - export REPO=lambdacube3d/lambdacube3d
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker build -f Dockerfile -t $REPO:$TAG .
   - docker push $REPO
