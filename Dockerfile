@@ -31,7 +31,7 @@ RUN cd /root/source/docker/lci/lambdacube-ir.haskell && \
     cabal install --only-dependencies --enable-library-profiling --enable-executable-profiling --reorder-goals && \
     cabal install --enable-library-profiling --enable-executable-profiling && \
     cd /root/source/docker/lcc && \
-    cabal install --constraint="indentation -trifecta" --only-dependencies --enable-library-profiling --enable-executable-profiling --reorder-goals
+    cabal install --only-dependencies --enable-library-profiling --enable-executable-profiling --reorder-goals
 
 # Directories for sources
 VOLUME "/root/source/lambdacube-ir"
