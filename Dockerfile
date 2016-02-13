@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:hvr/ghc && \
     apt-get update && \
-    apt-get install -y cabal-install-1.22 ghc-7.10.2 ghc-7.10.2-prof cpphs happy-1.19.4 alex-3.1.4 git
+    apt-get install -y cabal-install-1.22 ghc-7.10.2 ghc-7.10.2-prof cpphs happy-1.19.4 alex-3.1.4 git zlib1g-dev
 ENV PATH /opt/ghc/7.10.2/bin:/opt/cabal/1.22/bin:/opt/alex/3.1.4/bin:/opt/happy/1.19.4/bin:$PATH
 
 # Create development dirs
