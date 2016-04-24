@@ -30,6 +30,15 @@ Usage with docker:
  1. Run the test suite within the docker terminal like `./run-test-suite.sh`
  1. When you are done create a pull request
 
+### Howto bump lambdacube-compiler + lambdacube-ir submodules in this repo
+
+ 1. `git pull` in this repo
+ 1. `git submodule update`
+ 1. `(cd lambdacube-compiler; git pull)`
+ 1. git commit
+ 1. `git push`
+
+
 ## Development without docker
 
 It is not mandatory to use the docker image to develop lambdacube3d-compiler.
